@@ -74,59 +74,84 @@
                 </tr>
             </thead>
             <tbody>
-                {% for loan in loans %}
-                <tr>
-                    <td class="border border-gray-300 px-2 py-2 text-center">{{ loan['id'] }}</td>
-                    <td class="border border-gray-300 px-2 py-2">{{ loan['title'] | e }}</td>
-                    <td class="border border-gray-300 px-2 py-2">{{ loan['username'] | e }}</td>
-                    <td class="border border-gray-300 px-2 py-2">{{ loan['issue_date'] }}</td>
-                    <td class="border border-gray-300 px-2 py-2">{{ loan['expiry_date'] }}</td>
-                    <td class="border border-gray-300 px-2 py-2">
-                        {% if loan['return_date'] %}
-                            {{ loan['return_date'] }}
-                        {% else %}
-                            <span class="text-red-600 font-semibold">Not returned</span>
-                        {% endif %}
-                    </td>
-                    <td class="border border-gray-300 px-2 py-2 text-center">
-                        {% if loan['return_date'] %}
-                            <span class="px-2 py-1 rounded text-xs bg-green-100 text-green-800">Returned</span>
-                        {% elif loan['expiry_date'] < today %}
-                            <span class="px-2 py-1 rounded text-xs bg-red-100 text-red-800">Overdue</span>
-                        {% else %}
-                            <span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800">Active</span>
-                        {% endif %}
-                    </td>
-                    <td class="border border-gray-300 px-2 py-2 whitespace-nowrap text-center">
-                        {% if not loan['return_date'] %}
-                            {% if loan['expiry_date'] < today %}
-                                {# Overdue loan – Issue Fine button #}
-                                <form method="POST" class="inline-block" onsubmit="return confirm('Issue a fine for this overdue loan? The student will be charged PKR {{ ((today - loan['expiry_date']).days * 5) }}.');">
-                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                    <input type="hidden" name="action" value="issue_fine">
-                                    <input type="hidden" name="loan_id" value="{{ loan['id'] }}">
-                                    <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition">Issue Fine</button>
-                                </form>
-                            {% else %}
-                                {# Active loan – Make Overdue button #}
-                                <form method="POST" class="inline-block" onsubmit="return confirm('Backdate this loan by 5 days for demo?');">
-                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                                    <input type="hidden" name="action" value="demo_overdue">
-                                    <input type="hidden" name="loan_id" value="{{ loan['id'] }}">
-                                    <button type="submit" class="bg-purple-600 text-white px-3 py-1 rounded text-sm hover:bg-purple-700 transition">Make Overdue (Demo)</button>
-                                </form>
-                            {% endif %}
-                        {% else %}
-                            <span class="text-gray-400 text-sm">-</span>
-                        {% endif %}
-                    </td>
-                </tr>
-                {% else %}
-                <tr>
-                    <td colspan="8" class="border border-gray-300 px-3 py-6 text-center text-gray-600">No loan records found.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
+			    {% for loan in loans %}
+			    <tr>
+			        <td class="border border-gray-300 px-2 py-2 text-center">{{ loan['id'] }}</td>
+			        <td class="border border-gray-300 px-2 py-2">{{ loan['title'] | e }}</td>
+			        <td class="border border-gray-300 px-2 py-2">{{ loan['username'] | e }}</td>
+			        <td class="border border-gray-300 px-2 py-2">{{ loan['issue_date'] }}</td>
+			        <td class="border border-gray-300 px-2 py-2">{{ loan['expiry_date'] }}</td>
+			        <td class="border border-gray-300 px-2 py-2">
+			            {% if loan['return_date'] %}
+			                {{ loan['return_date'] }}
+			            {% else %}
+			                <span class="text-red-600 font-semibold">Not returned</span>
+			            {% endif %}
+			        </td>
+			        <td class="border border-gray-300 px-2 py-2 text-center">
+			            {# Determine status badge #}
+			            {% if loan['return_date'] %}
+			                {% if loan['return_date'] > loan['expiry_date'] %}
+			                    <span class="px-2 py-1 rounded text-xs font-semibold bg-orange-100 text-orange-800">Returned Late</span>
+			                {% else %}
+			                    <span class="px-2 py-1 rounded text-xs font-semibold bg-green-100 text-green-800">Returned</span>
+			                {% endif %}
+			            {% elif loan['expiry_date'] < today %}
+			                <span class="px-2 py-1 rounded text-xs font-semibold bg-red-100 text-red-800">Overdue</span>
+			            {% else %}
+			                <span class="px-2 py-1 rounded text-xs font-semibold bg-blue-100 text-blue-800">Active</span>
+			            {% endif %}
+			        </td>
+			        <td class="border border-gray-300 px-2 py-2 whitespace-nowrap text-center">
+			            {% if not loan['return_date'] %}
+			                {# Active (not returned) loans #}
+			                {% if loan['expiry_date'] < today %}
+			                    {# Overdue – show Issue Fine button only if no fine exists #}
+			                    {% if not loan['fine_exists'] %}
+			                    <form method="POST" class="inline-block" onsubmit="return confirm('Issue a fine for this overdue loan? The student will be charged PKR {{ ((today - loan['expiry_date']).days * 5) }}.');">
+			                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+			                        <input type="hidden" name="action" value="issue_fine">
+			                        <input type="hidden" name="loan_id" value="{{ loan['id'] }}">
+			                        <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition">Issue Fine</button>
+			                    </form>
+			                    {% else %}
+			                        <span class="text-gray-500 text-sm">Fine already issued</span>
+			                    {% endif %}
+			                {% else %}
+			                    {# On‑time active – no action #}
+			                    <span class="text-gray-400 text-sm">—</span>
+			                {% endif %}
+			            {% else %}
+			                {# Returned loans #}
+			                {% if loan['return_date'] > loan['expiry_date'] %}
+			                    {# Returned late #}
+			                    {% if not loan['fine_exists'] %}
+			                        <form method="POST" class="inline-block" onsubmit="return confirm('This loan was returned late but has no fine. Issue fine now?');">
+			                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+			                            <input type="hidden" name="action" value="issue_fine_returned">
+			                            <input type="hidden" name="loan_id" value="{{ loan['id'] }}">
+			                            <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition">Issue Fine</button>
+			                        </form>
+			                    {% else %}
+			                        {% if loan['fine_paid'] %}
+			                            <span class="text-green-600 text-sm font-semibold">Fine Paid</span>
+			                        {% else %}
+			                            <span class="text-red-600 text-sm font-semibold">Fine Unpaid</span>
+			                        {% endif %}
+			                    {% endif %}
+			                {% else %}
+			                    {# Returned on time – no action #}
+			                    <span class="text-gray-400 text-sm">—</span>
+			                {% endif %}
+			            {% endif %}
+			        </td>
+			    </tr>
+			    {% else %}
+			    <tr>
+			        <td colspan="8" class="border border-gray-300 px-3 py-6 text-center text-gray-600">No loan records found.</td>
+			    </tr>
+			    {% endfor %}
+			</tbody>
          </table>
          </div>
      </div>

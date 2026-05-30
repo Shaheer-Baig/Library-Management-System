@@ -1,3 +1,4 @@
+TEST-VENV/
 VENV-PIP/
-.venv
-VENV
+.venv/
+VENV/

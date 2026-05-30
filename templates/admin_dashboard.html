@@ -9,27 +9,27 @@
         <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <div class="bg-white bg-opacity-60 backdrop-blur-sm rounded-lg shadow p-4 text-center">
                 <div class="text-sm uppercase tracking-wider text-gray-600">Total Books</div>
-                <div class="text-3xl font-bold text-gray-900">{{ stats.total_books }}</div>
+                <div class="text-3xl font-bold text-black-900">{{ stats.total_books }}</div>
             </div>
             <div class="bg-white bg-opacity-60 backdrop-blur-sm rounded-lg shadow p-4 text-center">
                 <div class="text-sm uppercase tracking-wider text-gray-600">Available</div>
-                <div class="text-3xl font-bold text-green-700">{{ stats.available_books }}</div>
+                <div class="text-3xl font-bold text-black-900">{{ stats.available_books }}</div>
             </div>
             <div class="bg-white bg-opacity-60 backdrop-blur-sm rounded-lg shadow p-4 text-center">
                 <div class="text-sm uppercase tracking-wider text-gray-600">Issued</div>
-                <div class="text-3xl font-bold text-blue-700">{{ stats.issued_books_count }}</div>
+                <div class="text-3xl font-bold text-black-900">{{ stats.issued_books_count }}</div>
             </div>
             <div class="bg-white bg-opacity-60 backdrop-blur-sm rounded-lg shadow p-4 text-center">
                 <div class="text-sm uppercase tracking-wider text-gray-600">Total Students</div>
-                <div class="text-3xl font-bold text-gray-900">{{ stats.total_students }}</div>
+                <div class="text-3xl font-bold text-black-900">{{ stats.total_students }}</div>
             </div>
             <div class="bg-white bg-opacity-60 backdrop-blur-sm rounded-lg shadow p-4 text-center">
                 <div class="text-sm uppercase tracking-wider text-gray-600">Active Loans</div>
-                <div class="text-3xl font-bold text-indigo-700">{{ stats.active_loans }}</div>
+                <div class="text-3xl font-bold text-black-900">{{ stats.active_loans }}</div>
             </div>
             <div class="bg-white bg-opacity-60 backdrop-blur-sm rounded-lg shadow p-4 text-center">
                 <div class="text-sm uppercase tracking-wider text-gray-600">Overdue Loans</div>
-                <div class="text-3xl font-bold text-red-700">{{ stats.overdue_loans }}</div>
+                <div class="text-3xl font-bold text-black-900">{{ stats.overdue_loans }}</div>
             </div>
             <div class="bg-white bg-opacity-60 backdrop-blur-sm rounded-lg shadow p-4 text-center col-span-2">
                 <div class="text-sm uppercase tracking-wider text-gray-600">Unpaid Fines (Total)</div>
@@ -45,8 +45,8 @@
             <a href="{{ url_for('manage_loans') }}" class="bg-[#5FABDE] text-xl text-black text-center font-semibold px-4 py-4 rounded-lg shadow hover:opacity-90 transition">Manage Loans</a>
         </div>
         <div class="flex gap-3">
-            <a href="{{ url_for('reports') }}" class="flex-1 bg-[#7C3AED] text-xl text-black text-center font-semibold px-4 py-4 rounded-lg shadow hover:opacity-90 transition">Reports</a>
-            <a href="{{ url_for('logout') }}" class="flex-1 bg-red-500 text-xl text-white text-center font-semibold px-4 py-4 rounded-lg shadow hover:opacity-90 transition">Logout</a>
+            <a href="{{ url_for('reports') }}" class="flex-1 bg-[#7C3AED] text-2xl text-white text-center font-semibold px-4 py-4 rounded-lg shadow hover:opacity-90 transition">REPORTS</a>
+            <a href="{{ url_for('logout') }}" class="flex-1 bg-[#7C3AED] text-2xl text-white text-center font-semibold px-4 py-4 rounded-lg shadow hover:opacity-90 transition">LOGOUT</a>
         </div>
     </div>
 </div>

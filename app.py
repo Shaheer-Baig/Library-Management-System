@@ -432,14 +432,19 @@ def manage_categories():
                 flash('Database error', 'error')
         elif action == 'delete':
             cat_id = parse_optional_int(request.form.get('id'))
+            if cat_id == 1:
+                flash('Cannot delete the default "Uncategorized" category.', 'error')
+                return redirect(url_for('manage_categories'))
             if cat_id is None:
                 flash('Invalid category id', 'error')
                 return redirect(url_for('manage_categories'))
             try:
+                with db_cursor() as cur:
+                    cur.execute("UPDATE books SET category_id = 1 WHERE category_id = %s", (cat_id,))
                 delete_category(cat_id)
-                flash('Category deleted.', 'success')
-            except mysql.connector.Error:
-                flash('Database error', 'error')
+                flash('Category deleted. Books have been reassigned to "Uncategorized".', 'success')
+            except mysql.connector.Error as e:
+                flash(f'Database error: {e}', 'error')
         return redirect(url_for('manage_categories'))
     try:
         categories = get_all_categories()
@@ -498,10 +503,15 @@ def manage_publishers():
                 flash('Database error', 'error')
         elif action == 'delete':
             pub_id = parse_optional_int(request.form.get('id'))
+            if pub_id == 1:
+                flash('Cannot delete the default "Unknown Publisher" Publisher', 'error')
+                return redirect(url_for('manage_publishers'))
             if pub_id is None:
                 flash('Invalid publisher id', 'error')
                 return redirect(url_for('manage_publishers'))
             try:
+                with db_cursor() as cur:
+                    cur.execute("UPDATE books SET publisher_id = 1 WHERE publisher_id = %s", (pub_id,))
                 delete_publisher(pub_id)
                 flash('Publisher deleted.', 'success')
             except mysql.connector.Error:
@@ -572,14 +582,15 @@ def manage_books():
             return redirect(url_for('manage_books'))
     q = request.args.get('q', '').strip()
     cat_id = parse_optional_int(request.args.get('cat_id'))
+    pub_id = parse_optional_int(request.args.get('pub_id'))
     try:
-        books = get_books_with_filters(category_id=cat_id, search_query=q if q else None)
+        books = get_books_with_filters(category_id=cat_id, publisher_id=pub_id, search_query=q if q else None)
         categories = get_all_categories()
         publishers = get_all_publishers()
     except mysql.connector.Error:
         flash('Database error', 'error')
         return redirect(url_for('admin_dashboard'))
-    return render_template('manage_books.html', books=books, categories=categories, publishers=publishers, q=q, selected_cat=cat_id)
+    return render_template('manage_books.html', books=books, categories=categories, publishers=publishers, q=q, selected_cat=cat_id, selected_pub=pub_id)
 
 @app.route('/manage_loans', methods=['GET', 'POST'])
 @role_required('admin')
@@ -645,6 +656,28 @@ def manage_loans():
                     return redirect(url_for('manage_loans'))
                 if issue_fine_for_loan(loan_id, days_overdue):
                     flash(f'Fine of PKR {days_overdue * 5:.2f} issued for overdue loan.', 'success')
+                else:
+                    flash('A fine already exists for this loan.', 'warning')
+            except mysql.connector.Error:
+                flash('Database error', 'error')
+            return redirect(url_for('manage_loans'))
+        elif action == 'issue_fine_returned':
+            loan_id = parse_optional_int(request.form.get('loan_id'))
+            if loan_id is None:
+                flash('Invalid loan ID', 'error')
+                return redirect(url_for('manage_loans'))
+            try:
+                from queries import get_loan_by_id, issue_fine_for_returned_loan
+                loan = get_loan_by_id(loan_id)
+                if not loan or loan['return_date'] is None:
+                    flash('Loan not found or not yet returned', 'error')
+                    return redirect(url_for('manage_loans'))
+                days_late = (loan['return_date'] - loan['expiry_date']).days
+                if days_late <= 0:
+                    flash('Loan was returned on time – no fine', 'error')
+                    return redirect(url_for('manage_loans'))
+                if issue_fine_for_returned_loan(loan_id, days_late):
+                    flash(f'Fine of PKR {days_late * 5:.2f} issued for late‑returned loan.', 'success')
                 else:
                     flash('A fine already exists for this loan.', 'warning')
             except mysql.connector.Error:

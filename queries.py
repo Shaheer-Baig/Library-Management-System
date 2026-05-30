@@ -241,7 +241,7 @@ def search_books_by_keyword(keyword):
         )
         return cur.fetchall()
 
-def get_books_with_filters(category_id=None, search_query=None):
+def get_books_with_filters(category_id=None, publisher_id=None, search_query=None):
     sql = """
         SELECT b.id, b.title, b.author, b.isbn, b.status,
                b.category_id, b.publisher_id,
@@ -256,6 +256,9 @@ def get_books_with_filters(category_id=None, search_query=None):
     if category_id is not None:
         sql += " AND b.category_id = %s"
         params.append(category_id)
+    if publisher_id is not None:
+        sql += " AND b.publisher_id = %s"
+        params.append(publisher_id)
     if search_query:
         sql += " AND (b.title LIKE %s OR b.author LIKE %s)"
         like = f'%{search_query}%'
@@ -315,13 +318,18 @@ def delete_publisher(publisher_id):
 
 # ----- Issued books / Loans -----
 def get_all_loans_with_details(search=None, status_filter='all'):
-    """Get all loans with book title and student username, with optional filters."""
     sql = """
         SELECT ib.id, b.title, s.username,
-               ib.issue_date, ib.expiry_date, ib.return_date
+               ib.issue_date, ib.expiry_date, ib.return_date,
+               CASE
+                   WHEN f.id IS NOT NULL THEN TRUE
+                   ELSE FALSE
+               END AS fine_exists,
+               COALESCE(f.paid, FALSE) AS fine_paid
         FROM issued_books ib
         JOIN books b ON ib.book_id = b.id
         JOIN students s ON ib.student_id = s.id
+        LEFT JOIN fines f ON f.issued_book_id = ib.id
         WHERE 1=1
     """
     params = []
@@ -343,6 +351,18 @@ def issue_fine_for_loan(loan_id, days_overdue, rate_per_day=5.00):
         cur.execute("SELECT id FROM fines WHERE issued_book_id = %s", (loan_id,))
         if cur.fetchone(): return False
         amount = days_overdue * rate_per_day
+        cur.execute(
+            "INSERT INTO fines (issued_book_id, amount, paid) VALUES (%s, %s, FALSE)",
+            (loan_id, amount)
+        )
+        return True
+
+def issue_fine_for_returned_loan(loan_id, days_late, rate_per_day=5.00):
+    with db_cursor() as cur:
+        cur.execute("SELECT id FROM fines WHERE issued_book_id = %s", (loan_id,))
+        if cur.fetchone():
+            return False
+        amount = days_late * rate_per_day
         cur.execute(
             "INSERT INTO fines (issued_book_id, amount, paid) VALUES (%s, %s, FALSE)",
             (loan_id, amount)

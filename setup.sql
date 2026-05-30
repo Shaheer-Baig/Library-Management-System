@@ -93,16 +93,16 @@ CREATE TABLE books (
     title         VARCHAR(150) NOT NULL,
     author        VARCHAR(100) NOT NULL,
     isbn          VARCHAR(20)  NOT NULL UNIQUE,
-    category_id   INT          NULL,
-    publisher_id  INT          NULL,
+    category_id   INT          NOT NULL DEFAULT 1,
+    publisher_id  INT          NOT NULL DEFAULT 1,
     status        ENUM('Available','Issued','Reserved') NOT NULL DEFAULT 'Available',
     added_at      DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_books_category
         FOREIGN KEY (category_id)  REFERENCES categories(id)
-        ON DELETE SET NULL ON UPDATE CASCADE,
+        ON DELETE SET DEFAULT ON UPDATE CASCADE,
     CONSTRAINT fk_books_publisher
         FOREIGN KEY (publisher_id) REFERENCES publishers(id)
-        ON DELETE SET NULL ON UPDATE CASCADE,
+        ON DELETE SET DEFAULT ON UPDATE CASCADE,
     INDEX idx_books_category  (category_id),
     INDEX idx_books_publisher (publisher_id),
     INDEX idx_books_status    (status)
@@ -181,8 +181,9 @@ CREATE TABLE reservations (
 -- =====================================================================
 
 -- 2.1: Categories (Total = 16)
+INSERT INTO categories (id, name, description) VALUES
+    (1, 'Uncategorized', 'Default category for books without a specific category');
 INSERT INTO categories (name, description) VALUES
-    ('Uncategorised', 'Default bucket for unclassified items'),
     ('Fiction',       'Novels and imaginative literature'),
     ('Non-Fiction',   'Factual works, essays, biographies'),
     ('Science',       'Books on physical, biological, and applied sciences'),
@@ -200,8 +201,9 @@ INSERT INTO categories (name, description) VALUES
     ('Self-Help',     'Personal development, psychology, and improvement');
 
 -- 2.2: Publishers (Total = 20)
+INSERT INTO publishers (id, name, country, established_year) VALUES
+    (1, 'Unknown Publisher',       'Unknown',        1400);
 INSERT INTO publishers (name, country, established_year) VALUES
-    ('Unknown Publisher',          'Heavens',        2080),
     ('Penguin Random House',       'USA',            2013),
     ('HarperCollins',              'USA',            1989),
     ('Dover Publications',         'USA',            1941),
