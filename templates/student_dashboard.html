@@ -1,58 +1,84 @@
 {% extends "base.html" %}
 {% block content %}
-
 <div class="fixed inset-0 bg-cover bg-center bg-no-repeat"
-     style="background-image: url('{{ url_for('static', filename='images/pic4.jpg') }}'); z-index: -1;">
+     style="background-image: url('{{ url_for('static', filename='images/background.jpg') }}'); z-index: -1;">
+    <div class="absolute inset-0 bg-black/30 backdrop-blur-[2px]"></div>
 </div>
-
-<div class="min-h-screen flex items-center justify-center p-4">
- <div class="w-full max-w-5xl bg-white bg-opacity-50 backdrop-blur-sm rounded-xl shadow-xl overflow-hidden">
-     <div class="bg-[#C4A484] px-6 py-5">
-
-<h2 class="text-3xl font-semibold text-white text-center tracking-tight">Student Dashboard</h2>
-<h3 class="text-2xl font-semibold text-white text-center tracking-tight">Your Issued Books</h3>
-<table class="w-full border-collapse border border-gray-300 mb-8">
-    <thead>
-        <tr class="bg-gray-200">
-            <th class="border border-gray-300 px-4 py-2">Book Title</th>
-            <th class="border border-gray-300 px-4 py-2">Issue Date</th>
-            <th class="border border-gray-300 px-4 py-2">Expiry Date</th>
-            <th class="border border-gray-300 px-4 py-2">Return Date</th>
-            <th class="border border-gray-300 px-4 py-2">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for ib in issued_books %}
-        <tr>
-            <td class="border border-gray-300 px-4 py-2">{{ ib[1] | e }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ ib[2] }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ ib[3] }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ ib[4] if ib[4] else 'Not Returned' }}</td>
-            <td class="border border-gray-300 px-4 py-2">
-                {% if not ib[4] %}
-                <form method="POST" action="{{ url_for('student_return_book', issued_book_id=ib[0]) }}">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                    <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded">Return</button>
-                </form>
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-<h3 class="text-xl font-semibold text-white text-center tracking-tight">Search Books</h3>
-<form method="POST" action="{{ url_for('search_books') }}" class="space-y-4 mb-8">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <div>
-        <label for="search_query" class="block text-sm font-semibold text-white-700">Search</label>
-        <input type="text" name="search_query" id="search_query" class="w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm">
+<div class="min-h-screen p-6 relative">
+    <div class="max-w-6xl mx-auto glass-card rounded-2xl shadow-2xl overflow-hidden">
+        <div class="bg-[#C4A484] px-6 py-5">
+            <h2 class="text-3xl font-semibold text-white text-center tracking-tight">Student Dashboard</h2>
+        </div>
+        <div class="p-6 grid grid-cols-2 md:grid-cols-4 gap-4 border-b border-gray-200/50">
+            <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow p-4 text-center">
+                <div class="text-xs uppercase tracking-wider text-gray-600">Active Loans</div>
+                <div class="text-3xl font-bold text-indigo-700">{{ stats.active_loans_count }}</div>
+            </div>
+            <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow p-4 text-center">
+                <div class="text-xs uppercase tracking-wider text-gray-600">Pending Reservations</div>
+                <div class="text-3xl font-bold text-blue-700">{{ stats.pending_reservations_count }}</div>
+            </div>
+            <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow p-4 text-center">
+                <div class="text-xs uppercase tracking-wider text-gray-600">Unpaid Fines</div>
+                <div class="text-3xl font-bold text-amber-700">{{ stats.unpaid_fines_total }}</div>
+            </div>
+            <div class="bg-white/80 backdrop-blur-sm rounded-lg shadow p-4 text-center">
+                <div class="text-xs uppercase tracking-wider text-gray-600">Lifetime Borrowed</div>
+                <div class="text-3xl font-bold text-gray-900">{{ stats.total_borrowed_lifetime }}</div>
+            </div>
+        </div>
+        <div class="p-6 border-b border-gray-200/50">
+            <a href="{{ url_for('student_catalogue') }}" class="block bg-green-600 hover:bg-green-700 text-white text-center font-semibold text-xl px-6 py-4 rounded-lg shadow transition">Browse Catalogue</a>
+        </div>
+        <div class="px-6 pb-6 grid grid-cols-1 md:grid-cols-3 gap-3">
+            <a href="{{ url_for('my_history') }}" class="bg-[#5FABDE] hover:opacity-90 text-black text-center font-semibold px-4 py-3 rounded-lg shadow transition">My History</a>
+            <a href="{{ url_for('my_reservations') }}" class="bg-[#5FABDE] hover:opacity-90 text-black text-center font-semibold px-4 py-3 rounded-lg shadow transition">My Reservations</a>
+            <a href="{{ url_for('my_fines') }}" class="bg-[#5FABDE] hover:opacity-90 text-black text-center font-semibold px-4 py-3 rounded-lg shadow transition">My Fines</a>
+        </div>
+        <div class="px-6 pb-6">
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow overflow-hidden">
+                <div class="bg-[#C4A484] px-4 py-3">
+                    <h3 class="text-xl font-semibold text-white tracking-tight">Active Loans</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse">
+                        <thead class="bg-gray-200">
+                            <tr>
+                                <th class="border border-gray-300 px-4 py-2 text-left">Book Title</th>
+                                <th class="border border-gray-300 px-4 py-2 text-left">Issue Date</th>
+                                <th class="border border-gray-300 px-4 py-2 text-left">Expiry Date</th>
+                                <th class="border border-gray-300 px-4 py-2 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ib in issued_books %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="border border-gray-300 px-4 py-2">{{ ib['title'] | e }}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{ ib['issue_date'] }}</td>
+                                <td class="border border-gray-300 px-4 py-2">{{ ib['expiry_date'] }}</td>
+                                <td class="border border-gray-300 px-4 py-2 text-center">
+                                    <form method="POST" action="{{ url_for('student_return_book', issued_book_id=ib['id']) }}">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition">Return</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="4" class="border border-gray-300 px-4 py-6 text-center text-gray-600">No active loans. Browse the catalogue to issue a book.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="px-6 pb-6">
+            <a href="{{ url_for('logout') }}" class="block bg-red-500 hover:bg-red-600 text-white text-center font-semibold px-4 py-3 rounded-lg shadow transition">Logout</a>
+        </div>
+        <footer class="text-center text-xs text-gray-500 pb-4">
+            Powered by <span class="font-semibold">Code_of_Duty</span>
+        </footer>
     </div>
-    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Search</button>
-        <footer class="text-center text-sm mt-12 mb-6">
-        <p class="drop-shadow-md">Powered by <span class="font-semibold">Code_of_Duty</span></p>
-    </footer>
-</form>
-
-<a href="{{ url_for('logout') }}" class="block bg-red-500 text-white px-4 py-2 rounded text-center">Logout</a>
+</div>
 {% endblock %}

@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class="fixed inset-0 bg-cover bg-center bg-no-repeat"
-     style="background-image: url('{{ url_for('static', filename='images/pic4.jpg') }}'); z-index: -1;">
+     style="background-image: url('{{ url_for('static', filename='images/background.jpg') }}'); z-index: -1;">
 </div>
 
 <div class="min-h-screen flex items-center justify-center p-4">
@@ -18,7 +18,7 @@
         <label for="isbn" class="block text-sm font-semibold text-white-700">Select Book (ISBN - Title)</label>
         <select name="isbn" id="isbn" class="w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm">
             {% for book in books %}
-            <option value="{{ book[0] | e }}">{{ book[0] | e }} - {{ book[1] | e }}</option>
+            <option value="{{ book['isbn'] | e }}">{{ book['isbn'] | e }} - {{ book['title'] | e }}</option>
             {% endfor %}
         </select>
     </div>
@@ -26,7 +26,7 @@
         <label for="student_username" class="block text-sm font-semibold text-white-700">Select Student (Username)</label>
         <select name="student_username" id="student_username" class="w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm">
             {% for student in students %}
-            <option value="{{ student[0] | e }}">{{ student[0] | e }}</option>
+            <option value="{{ student['username'] | e }}">{{ student['username'] | e }}</option>
             {% endfor %}
         </select>
     </div>

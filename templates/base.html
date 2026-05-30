@@ -3,41 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Library Management System</title>
-
-    <!-- Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
-    <!-- Google Font: Poppins -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
-    <!-- Global Styles -->
+    <title>Library Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-            overflow-x: hidden; /* Only hide horizontal scrollbar */
+        * { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-heading { font-family: 'Poppins', sans-serif; }
+        body { background: #f3f4f6; }
+        .overflow-x-auto::-webkit-scrollbar {
+            height: 6px;
+        }
+        .overflow-x-auto::-webkit-scrollbar-track {
+            background: #e5e7eb;
+            border-radius: 4px;
+        }
+        .overflow-x-auto::-webkit-scrollbar-thumb {
+            background: #9ca3af;
+            border-radius: 4px;
+        }
+        .hover-table tbody tr:hover {
+            background-color: rgba(0,0,0,0.02);
+        }
+        .glass-card {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .transition-smooth {
+            transition: all 0.2s ease;
         }
     </style>
 </head>
-<body class="bg-gray-100">
-
-    <!-- Flash Messages -->
+<body class="bg-gray-100 antialiased">
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-            <div class="absolute top-4 left-4 right-4 z-50">
+            <div class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-md space-y-2 px-4">
                 {% for category, message in messages %}
-                    <div class="bg-{{ 'green' if category == 'success' else 'red' }}-100 border border-{{ 'green' if category == 'success' else 'red' }}-400 text-{{ 'green' if category == 'success' else 'red' }}-700 px-4 py-3 rounded relative mb-2" role="alert">
+                    <div class="px-4 py-3 rounded-lg shadow-lg text-sm font-medium {% if category == 'success' %}bg-green-100 border-l-4 border-green-600 text-green-800{% else %}bg-red-100 border-l-4 border-red-600 text-red-800{% endif %}"
+                         role="alert">
                         {{ message | e }}
                     </div>
                 {% endfor %}
             </div>
         {% endif %}
     {% endwith %}
-
     {% block content %}{% endblock %}
-
+    {% include "_sql_panel.html" %}
 </body>
 </html>

@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="fixed inset-0 bg-cover bg-center bg-no-repeat"
+     style="background-image: url('{{ url_for('static', filename='images/background.jpg') }}'); z-index: -1;">
+</div>
+
+<div class="min-h-screen flex items-center justify-center p-4">
+ <div class="w-full max-w-5xl bg-white bg-opacity-50 backdrop-blur-sm rounded-xl shadow-xl overflow-hidden">
+     <div class="bg-[#C4A484] px-6 py-5">
+        <h2 class="text-3xl font-semibold text-white text-center tracking-tight">Manage Publishers</h2>
+     </div>
+     <form method="POST" class="p-6 grid grid-cols-1 md:grid-cols-4 gap-3 items-end border-b border-gray-300 bg-white bg-opacity-60">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="action" value="add">
+        <div>
+            <label class="block text-lg font-semibold text-center">Name</label>
+            <input type="text" name="name" required maxlength="100" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+        </div>
+        <div>
+            <label class="block text-lg font-semibold text-center">Country</label>
+            <input type="text" name="country" maxlength="50" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+        </div>
+        <div>
+            <label class="block text-lg font-semibold text-center">Established Year</label>
+            <input type="number" name="established_year" min="1400" max="2100" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+        </div>
+        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Add Publisher</button>
+     </form>
+     <div class="overflow-x-auto p-4">
+     <table class="w-full border-collapse border border-gray-300 bg-white">
+        <thead>
+            <tr class="bg-gray-200">
+                <th class="border border-gray-300 px-3 py-2">ID</th>
+                <th class="border border-gray-300 px-3 py-2">Name</th>
+                <th class="border border-gray-300 px-3 py-2">Country</th>
+                <th class="border border-gray-300 px-3 py-2">Established Year</th>
+                <th class="border border-gray-300 px-3 py-2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in publishers %}
+            <tr id="row-{{ p['id'] }}">
+                <td class="border border-gray-300 px-3 py-2 text-center">{{ p['id'] }}</td>
+                <td class="border border-gray-300 px-3 py-2">
+                    <input type="text" id="name-{{ p['id'] }}" value="{{ p['name'] | e }}" class="w-full px-2 py-1 border border-gray-300 rounded">
+                </td>
+                <td class="border border-gray-300 px-3 py-2">
+                    <input type="text" id="country-{{ p['id'] }}" value="{{ p['country'] | e if p['country'] else '' }}" class="w-full px-2 py-1 border border-gray-300 rounded">
+                </td>
+                <td class="border border-gray-300 px-3 py-2">
+                    <input type="number" id="year-{{ p['id'] }}" value="{{ p['established_year'] if p['established_year'] is not none else '' }}" min="1400" max="2100" class="w-full px-2 py-1 border border-gray-300 rounded">
+                </td>
+                <td class="border border-gray-300 px-3 py-2 whitespace-nowrap text-center">
+                    <form method="POST" class="inline-block" id="save-form-{{ p['id'] }}" onsubmit="preparePublisherSave({{ p['id'] }})">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="action" value="edit">
+                        <input type="hidden" name="id" value="{{ p['id'] }}">
+                        <input type="hidden" name="name" id="save-name-{{ p['id'] }}">
+                        <input type="hidden" name="country" id="save-country-{{ p['id'] }}">
+                        <input type="hidden" name="established_year" id="save-year-{{ p['id'] }}">
+                        <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition">Save</button>
+                    </form>
+                    <form method="POST" class="inline-block ml-2" onsubmit="return confirm('Delete this publisher? Books linked to it will be unlinked.');">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="action" value="delete">
+                        <input type="hidden" name="id" value="{{ p['id'] }}">
+                        <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+     </table>
+     </div>
+     <a href="{{ url_for('admin_dashboard') }}" class="block bg-gray-500 text-white px-4 py-2 rounded mt-4 mx-4 mb-4 text-center hover:bg-gray-600 transition">Back to Dashboard</a>
+     <footer class="text-center text-sm mb-6">
+        <p class="drop-shadow-md">Powered by <span class="font-semibold">Code_of_Duty</span></p>
+     </footer>
+ </div>
+</div>
+<div class="mb-10"></div>
+
+<script>
+    function preparePublisherSave(pubId) {
+        let nameInput = document.getElementById('name-' + pubId);
+        let countryInput = document.getElementById('country-' + pubId);
+        let yearInput = document.getElementById('year-' + pubId);
+        document.getElementById('save-name-' + pubId).value = nameInput.value;
+        document.getElementById('save-country-' + pubId).value = countryInput.value;
+        document.getElementById('save-year-' + pubId).value = yearInput.value;
+        return true;
+    }
+</script>
+{% endblock %}
