@@ -925,3 +925,520 @@
 [2026-05-30 23:25:06,945] SELECT COALESCE(SUM(amount), 0) AS total FROM fines WHERE paid = FALSE
 [2026-05-30 23:25:07,032] SELECT id, username, email, phone, created_at FROM students ORDER BY id
 [2026-05-30 23:25:07,130] SELECT isbn, title FROM books WHERE status = 'Available'
+[2026-05-31 11:54:06,066] SELECT * FROM admins WHERE username = 'admin'
+[2026-05-31 11:54:06,231] SELECT COUNT(*) AS n FROM books
+[2026-05-31 11:54:06,231] SELECT COUNT(*) AS n FROM books WHERE status = 'Available'
+[2026-05-31 11:54:06,232] SELECT COUNT(*) AS n FROM books WHERE status = 'Issued'
+[2026-05-31 11:54:06,232] SELECT COUNT(*) AS n FROM students
+[2026-05-31 11:54:06,232] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL
+[2026-05-31 11:54:06,233] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL AND expiry_date < CURDATE()
+[2026-05-31 11:54:06,233] SELECT COALESCE(SUM(amount), 0) AS total FROM fines WHERE paid = FALSE
+[2026-05-31 11:54:13,890] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 11:54:33,402] INSERT INTO categories (name, description) VALUES ('Test-Category', 'Testing categories')
+[2026-05-31 11:54:33,443] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 11:54:43,409] SELECT COUNT(*) AS n FROM books
+[2026-05-31 11:54:43,410] SELECT COUNT(*) AS n FROM books WHERE status = 'Available'
+[2026-05-31 11:54:43,410] SELECT COUNT(*) AS n FROM books WHERE status = 'Issued'
+[2026-05-31 11:54:43,410] SELECT COUNT(*) AS n FROM students
+[2026-05-31 11:54:43,411] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL
+[2026-05-31 11:54:43,411] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL AND expiry_date < CURDATE()
+[2026-05-31 11:54:43,412] SELECT COALESCE(SUM(amount), 0) AS total FROM fines WHERE paid = FALSE
+[2026-05-31 11:54:49,838] SELECT id, name, country, established_year FROM publishers ORDER BY id
+[2026-05-31 11:55:24,838] INSERT INTO publishers (name, country, established_year) VALUES ('SKY Publishers', 'Pakistan', 1450)
+[2026-05-31 11:55:24,876] SELECT id, name, country, established_year FROM publishers ORDER BY id
+[2026-05-31 11:55:34,930] SELECT COUNT(*) AS n FROM books
+[2026-05-31 11:55:34,930] SELECT COUNT(*) AS n FROM books WHERE status = 'Available'
+[2026-05-31 11:55:34,931] SELECT COUNT(*) AS n FROM books WHERE status = 'Issued'
+[2026-05-31 11:55:34,931] SELECT COUNT(*) AS n FROM students
+[2026-05-31 11:55:34,931] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL
+[2026-05-31 11:55:34,932] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL AND expiry_date < CURDATE()
+[2026-05-31 11:55:34,932] SELECT COALESCE(SUM(amount), 0) AS total FROM fines WHERE paid = FALSE
+[2026-05-31 11:55:40,693] SELECT id, username, created_at FROM admins ORDER BY id
+[2026-05-31 11:55:54,298] INSERT INTO admins (username, password) VALUES ('test_admin', 'scrypt:32768:8:1$EP5oBnewsFUSkXbU$2edcd7cf74cc5cf4ca455db6e7f1033f281ddb554652feb2db9c750abbf770d8e4f83f49aaaca3c44bc8816bc1eeb83739e89859e304dfded7752b9a3e6d6ce4')
+[2026-05-31 11:55:54,357] SELECT id, username, created_at FROM admins ORDER BY id
+[2026-05-31 11:55:58,567] DELETE FROM admins WHERE id = 2
+[2026-05-31 11:55:58,628] SELECT id, username, created_at FROM admins ORDER BY id
+[2026-05-31 11:56:00,651] SELECT COUNT(*) AS n FROM books
+[2026-05-31 11:56:00,654] SELECT COUNT(*) AS n FROM books WHERE status = 'Available'
+[2026-05-31 11:56:00,655] SELECT COUNT(*) AS n FROM books WHERE status = 'Issued'
+[2026-05-31 11:56:00,655] SELECT COUNT(*) AS n FROM students
+[2026-05-31 11:56:00,656] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL
+[2026-05-31 11:56:00,656] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL AND expiry_date < CURDATE()
+[2026-05-31 11:56:00,656] SELECT COALESCE(SUM(amount), 0) AS total FROM fines WHERE paid = FALSE
+[2026-05-31 11:56:04,727] SELECT id, username, email, phone, created_at FROM students ORDER BY id
+[2026-05-31 11:56:16,085] UPDATE students SET password = 'scrypt:32768:8:1$BG5WPgVVJx6y1Z4G$182baedc7676ed65b0a2f03131d4b553acc24dad64e005585bb0ea9c22dc3f68b7bfc98d3b5f4a3ceb2510ab8583e21c33a8a869951ed0099029c162ee62a789' WHERE id = 5
+[2026-05-31 11:56:16,119] SELECT id, username, email, phone, created_at FROM students ORDER BY id
+[2026-05-31 11:56:22,962] SELECT id, username, email, phone, created_at FROM students ORDER BY id
+[2026-05-31 11:56:29,191] SELECT COUNT(*) AS n FROM books
+[2026-05-31 11:56:29,192] SELECT COUNT(*) AS n FROM books WHERE status = 'Available'
+[2026-05-31 11:56:29,192] SELECT COUNT(*) AS n FROM books WHERE status = 'Issued'
+[2026-05-31 11:56:29,193] SELECT COUNT(*) AS n FROM students
+[2026-05-31 11:56:29,197] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL
+[2026-05-31 11:56:29,198] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL AND expiry_date < CURDATE()
+[2026-05-31 11:56:29,198] SELECT COALESCE(SUM(amount), 0) AS total FROM fines WHERE paid = FALSE
+[2026-05-31 11:56:32,993] SELECT b.id, b.title, b.author, b.isbn, b.status,
+               b.category_id, b.publisher_id,
+               COALESCE(c.name, 'Uncategorized') AS category,
+               COALESCE(p.name, 'Unknown Publisher') AS publisher
+        FROM books b
+        LEFT JOIN categories c ON b.category_id = c.id
+        LEFT JOIN publishers p ON b.publisher_id = p.id
+        WHERE 1=1
+     ORDER BY b.id
+[2026-05-31 11:56:33,014] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 11:56:33,034] SELECT id, name, country, established_year FROM publishers ORDER BY id
+[2026-05-31 11:56:49,516] SELECT b.id, b.title, b.author, b.isbn, b.status,
+               b.category_id, b.publisher_id,
+               COALESCE(c.name, 'Uncategorized') AS category,
+               COALESCE(p.name, 'Unknown Publisher') AS publisher
+        FROM books b
+        LEFT JOIN categories c ON b.category_id = c.id
+        LEFT JOIN publishers p ON b.publisher_id = p.id
+        WHERE 1=1
+     AND (b.title LIKE '%code%' OR b.author LIKE '%code%') ORDER BY b.id
+[2026-05-31 11:56:49,534] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 11:56:49,552] SELECT id, name, country, established_year FROM publishers ORDER BY id
+[2026-05-31 11:56:53,771] SELECT b.id, b.title, b.author, b.isbn, b.status,
+               b.category_id, b.publisher_id,
+               COALESCE(c.name, 'Uncategorized') AS category,
+               COALESCE(p.name, 'Unknown Publisher') AS publisher
+        FROM books b
+        LEFT JOIN categories c ON b.category_id = c.id
+        LEFT JOIN publishers p ON b.publisher_id = p.id
+        WHERE 1=1
+     ORDER BY b.id
+[2026-05-31 11:56:53,795] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 11:56:53,813] SELECT id, name, country, established_year FROM publishers ORDER BY id
+[2026-05-31 11:57:19,289] SELECT b.id, b.title, b.author, b.isbn, b.status,
+               b.category_id, b.publisher_id,
+               COALESCE(c.name, 'Uncategorized') AS category,
+               COALESCE(p.name, 'Unknown Publisher') AS publisher
+        FROM books b
+        LEFT JOIN categories c ON b.category_id = c.id
+        LEFT JOIN publishers p ON b.publisher_id = p.id
+        WHERE 1=1
+     ORDER BY b.id
+[2026-05-31 11:57:19,309] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 11:57:19,327] SELECT id, name, country, established_year FROM publishers ORDER BY id
+[2026-05-31 11:57:41,864] SELECT b.id, b.title, b.author, b.isbn, b.status,
+               b.category_id, b.publisher_id,
+               COALESCE(c.name, 'Uncategorized') AS category,
+               COALESCE(p.name, 'Unknown Publisher') AS publisher
+        FROM books b
+        LEFT JOIN categories c ON b.category_id = c.id
+        LEFT JOIN publishers p ON b.publisher_id = p.id
+        WHERE 1=1
+     ORDER BY b.id
+[2026-05-31 11:57:41,883] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 11:57:41,904] SELECT id, name, country, established_year FROM publishers ORDER BY id
+[2026-05-31 11:58:19,909] INSERT INTO books (title, author, isbn, category_id, publisher_id)
+            VALUES ('Bookia', 'yasir', '1234567891234', 7, 5)
+[2026-05-31 11:58:19,947] SELECT b.id, b.title, b.author, b.isbn, b.status,
+               b.category_id, b.publisher_id,
+               COALESCE(c.name, 'Uncategorized') AS category,
+               COALESCE(p.name, 'Unknown Publisher') AS publisher
+        FROM books b
+        LEFT JOIN categories c ON b.category_id = c.id
+        LEFT JOIN publishers p ON b.publisher_id = p.id
+        WHERE 1=1
+     ORDER BY b.id
+[2026-05-31 11:58:19,962] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 11:58:19,981] SELECT id, name, country, established_year FROM publishers ORDER BY id
+[2026-05-31 11:58:29,289] DELETE FROM books WHERE id = 151
+[2026-05-31 11:58:29,416] SELECT b.id, b.title, b.author, b.isbn, b.status,
+               b.category_id, b.publisher_id,
+               COALESCE(c.name, 'Uncategorized') AS category,
+               COALESCE(p.name, 'Unknown Publisher') AS publisher
+        FROM books b
+        LEFT JOIN categories c ON b.category_id = c.id
+        LEFT JOIN publishers p ON b.publisher_id = p.id
+        WHERE 1=1
+     ORDER BY b.id
+[2026-05-31 11:58:29,475] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 11:58:29,521] SELECT id, name, country, established_year FROM publishers ORDER BY id
+[2026-05-31 11:58:37,155] UPDATE books
+            SET title = 'Animal Farm', author = 'George Orwell', isbn = '9780451526342',
+                category_id = 9, publisher_id = 2
+            WHERE id = 5
+[2026-05-31 11:58:37,196] SELECT b.id, b.title, b.author, b.isbn, b.status,
+               b.category_id, b.publisher_id,
+               COALESCE(c.name, 'Uncategorized') AS category,
+               COALESCE(p.name, 'Unknown Publisher') AS publisher
+        FROM books b
+        LEFT JOIN categories c ON b.category_id = c.id
+        LEFT JOIN publishers p ON b.publisher_id = p.id
+        WHERE 1=1
+     ORDER BY b.id
+[2026-05-31 11:58:37,215] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 11:58:37,232] SELECT id, name, country, established_year FROM publishers ORDER BY id
+[2026-05-31 11:58:47,648] UPDATE books
+            SET title = 'The Immortal Life of Henrietta Lacks', author = 'Rebecca Skloot', isbn = '9781400052189',
+                category_id = 3, publisher_id = 15
+            WHERE id = 15
+[2026-05-31 11:58:47,683] SELECT b.id, b.title, b.author, b.isbn, b.status,
+               b.category_id, b.publisher_id,
+               COALESCE(c.name, 'Uncategorized') AS category,
+               COALESCE(p.name, 'Unknown Publisher') AS publisher
+        FROM books b
+        LEFT JOIN categories c ON b.category_id = c.id
+        LEFT JOIN publishers p ON b.publisher_id = p.id
+        WHERE 1=1
+     ORDER BY b.id
+[2026-05-31 11:58:47,701] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 11:58:47,719] SELECT id, name, country, established_year FROM publishers ORDER BY id
+[2026-05-31 11:58:53,084] SELECT COUNT(*) AS n FROM books
+[2026-05-31 11:58:53,084] SELECT COUNT(*) AS n FROM books WHERE status = 'Available'
+[2026-05-31 11:58:53,084] SELECT COUNT(*) AS n FROM books WHERE status = 'Issued'
+[2026-05-31 11:58:53,085] SELECT COUNT(*) AS n FROM students
+[2026-05-31 11:58:53,085] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL
+[2026-05-31 11:58:53,085] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL AND expiry_date < CURDATE()
+[2026-05-31 11:58:53,086] SELECT COALESCE(SUM(amount), 0) AS total FROM fines WHERE paid = FALSE
+[2026-05-31 11:58:57,561] SELECT ib.id, b.title, s.username,
+               ib.issue_date, ib.expiry_date, ib.return_date,
+               CASE
+                   WHEN f.id IS NOT NULL THEN TRUE
+                   ELSE FALSE
+               END AS fine_exists,
+               COALESCE(f.paid, FALSE) AS fine_paid
+        FROM issued_books ib
+        JOIN books b ON ib.book_id = b.id
+        JOIN students s ON ib.student_id = s.id
+        LEFT JOIN fines f ON f.issued_book_id = ib.id
+        WHERE 1=1
+     ORDER BY ib.id DESC
+[2026-05-31 11:58:57,580] SELECT f.id AS fine_id, s.username AS student, b.title AS book,
+                   f.amount, f.created_at, ib.expiry_date, ib.return_date
+            FROM fines f
+            JOIN issued_books ib ON f.issued_book_id = ib.id
+            JOIN students s ON ib.student_id = s.id
+            JOIN books b ON ib.book_id = b.id
+            WHERE f.paid = FALSE
+            ORDER BY f.created_at DESC
+[2026-05-31 11:58:57,600] SELECT COALESCE(SUM(amount), 0) AS total FROM fines WHERE paid = FALSE
+[2026-05-31 11:58:57,618] SELECT id, username, email, phone, created_at FROM students ORDER BY id
+[2026-05-31 11:58:57,636] SELECT isbn, title FROM books WHERE status = 'Available'
+[2026-05-31 11:59:28,641] SELECT id, book_id, student_id, expiry_date, return_date FROM issued_books WHERE id = 6
+[2026-05-31 11:59:28,753] SELECT id FROM fines WHERE issued_book_id = 6
+[2026-05-31 11:59:28,755] INSERT INTO fines (issued_book_id, amount, paid) VALUES (6, 15.0, FALSE)
+[2026-05-31 11:59:28,802] SELECT ib.id, b.title, s.username,
+               ib.issue_date, ib.expiry_date, ib.return_date,
+               CASE
+                   WHEN f.id IS NOT NULL THEN TRUE
+                   ELSE FALSE
+               END AS fine_exists,
+               COALESCE(f.paid, FALSE) AS fine_paid
+        FROM issued_books ib
+        JOIN books b ON ib.book_id = b.id
+        JOIN students s ON ib.student_id = s.id
+        LEFT JOIN fines f ON f.issued_book_id = ib.id
+        WHERE 1=1
+     ORDER BY ib.id DESC
+[2026-05-31 11:59:28,822] SELECT f.id AS fine_id, s.username AS student, b.title AS book,
+                   f.amount, f.created_at, ib.expiry_date, ib.return_date
+            FROM fines f
+            JOIN issued_books ib ON f.issued_book_id = ib.id
+            JOIN students s ON ib.student_id = s.id
+            JOIN books b ON ib.book_id = b.id
+            WHERE f.paid = FALSE
+            ORDER BY f.created_at DESC
+[2026-05-31 11:59:28,841] SELECT COALESCE(SUM(amount), 0) AS total FROM fines WHERE paid = FALSE
+[2026-05-31 11:59:28,860] SELECT id, username, email, phone, created_at FROM students ORDER BY id
+[2026-05-31 11:59:28,879] SELECT isbn, title FROM books WHERE status = 'Available'
+[2026-05-31 11:59:40,879] SELECT COUNT(*) AS n FROM books
+[2026-05-31 11:59:40,880] SELECT COUNT(*) AS n FROM books WHERE status = 'Available'
+[2026-05-31 11:59:40,880] SELECT COUNT(*) AS n FROM books WHERE status = 'Issued'
+[2026-05-31 11:59:40,880] SELECT COUNT(*) AS n FROM students
+[2026-05-31 11:59:40,881] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL
+[2026-05-31 11:59:40,881] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL AND expiry_date < CURDATE()
+[2026-05-31 11:59:40,881] SELECT COALESCE(SUM(amount), 0) AS total FROM fines WHERE paid = FALSE
+[2026-05-31 11:59:45,702] SELECT COALESCE(c.name, 'Uncategorised') AS category, COUNT(b.id) AS book_count
+            FROM books b
+            LEFT JOIN categories c ON b.category_id = c.id
+            GROUP BY c.id, c.name
+            ORDER BY book_count DESC
+[2026-05-31 11:59:45,724] SELECT b.id, b.title, b.author, COUNT(ib.id) AS times_borrowed
+            FROM books b
+            LEFT JOIN issued_books ib ON ib.book_id = b.id
+            GROUP BY b.id, b.title, b.author
+            ORDER BY times_borrowed DESC, b.title ASC
+            LIMIT 10
+[2026-05-31 11:59:45,743] SELECT ib.id AS loan_id, s.username AS student, b.title AS book,
+                   b.isbn, ib.issue_date, ib.expiry_date,
+                   DATEDIFF(CURDATE(), ib.expiry_date) AS days_overdue
+            FROM issued_books ib
+            JOIN students s ON ib.student_id = s.id
+            JOIN books b ON ib.book_id = b.id
+            WHERE ib.return_date IS NULL AND ib.expiry_date < CURDATE()
+            ORDER BY days_overdue DESC
+[2026-05-31 12:00:01,405] SELECT COUNT(*) AS n FROM books
+[2026-05-31 12:00:01,406] SELECT COUNT(*) AS n FROM books WHERE status = 'Available'
+[2026-05-31 12:00:01,406] SELECT COUNT(*) AS n FROM books WHERE status = 'Issued'
+[2026-05-31 12:00:01,407] SELECT COUNT(*) AS n FROM students
+[2026-05-31 12:00:01,407] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL
+[2026-05-31 12:00:01,407] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL AND expiry_date < CURDATE()
+[2026-05-31 12:00:01,408] SELECT COALESCE(SUM(amount), 0) AS total FROM fines WHERE paid = FALSE
+[2026-05-31 12:00:04,773] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 12:00:11,180] UPDATE books SET category_id = 1 WHERE category_id = 16
+[2026-05-31 12:00:11,239] DELETE FROM categories WHERE id = 16
+[2026-05-31 12:00:11,299] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 12:00:24,623] UPDATE categories SET name = 'Science-Fiction', description = 'Books on physical, biological, and applied sciences' WHERE id = 4
+[2026-05-31 12:00:24,673] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 12:00:28,603] SELECT COUNT(*) AS n FROM books
+[2026-05-31 12:00:28,604] SELECT COUNT(*) AS n FROM books WHERE status = 'Available'
+[2026-05-31 12:00:28,604] SELECT COUNT(*) AS n FROM books WHERE status = 'Issued'
+[2026-05-31 12:00:28,604] SELECT COUNT(*) AS n FROM students
+[2026-05-31 12:00:28,605] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL
+[2026-05-31 12:00:28,605] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL AND expiry_date < CURDATE()
+[2026-05-31 12:00:28,605] SELECT COALESCE(SUM(amount), 0) AS total FROM fines WHERE paid = FALSE
+[2026-05-31 12:00:31,119] SELECT b.id, b.title, b.author, b.isbn, b.status,
+               b.category_id, b.publisher_id,
+               COALESCE(c.name, 'Uncategorized') AS category,
+               COALESCE(p.name, 'Unknown Publisher') AS publisher
+        FROM books b
+        LEFT JOIN categories c ON b.category_id = c.id
+        LEFT JOIN publishers p ON b.publisher_id = p.id
+        WHERE 1=1
+     ORDER BY b.id
+[2026-05-31 12:00:31,141] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 12:00:31,163] SELECT id, name, country, established_year FROM publishers ORDER BY id
+[2026-05-31 12:00:49,426] UPDATE books
+            SET title = 'Daring Greatly', author = 'Brene Brown', isbn = '9781592408412',
+                category_id = 13, publisher_id = 2
+            WHERE id = 146
+[2026-05-31 12:00:49,471] SELECT b.id, b.title, b.author, b.isbn, b.status,
+               b.category_id, b.publisher_id,
+               COALESCE(c.name, 'Uncategorized') AS category,
+               COALESCE(p.name, 'Unknown Publisher') AS publisher
+        FROM books b
+        LEFT JOIN categories c ON b.category_id = c.id
+        LEFT JOIN publishers p ON b.publisher_id = p.id
+        WHERE 1=1
+     ORDER BY b.id
+[2026-05-31 12:00:49,489] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 12:00:49,507] SELECT id, name, country, established_year FROM publishers ORDER BY id
+[2026-05-31 12:00:58,367] SELECT COUNT(*) AS n FROM books
+[2026-05-31 12:00:58,367] SELECT COUNT(*) AS n FROM books WHERE status = 'Available'
+[2026-05-31 12:00:58,368] SELECT COUNT(*) AS n FROM books WHERE status = 'Issued'
+[2026-05-31 12:00:58,368] SELECT COUNT(*) AS n FROM students
+[2026-05-31 12:00:58,369] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL
+[2026-05-31 12:00:58,369] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL AND expiry_date < CURDATE()
+[2026-05-31 12:00:58,370] SELECT COALESCE(SUM(amount), 0) AS total FROM fines WHERE paid = FALSE
+[2026-05-31 12:00:59,812] SELECT id, name, country, established_year FROM publishers ORDER BY id
+[2026-05-31 12:01:11,910] UPDATE books SET publisher_id = 1 WHERE publisher_id = 2
+[2026-05-31 12:01:11,984] DELETE FROM publishers WHERE id = 2
+[2026-05-31 12:01:12,025] SELECT id, name, country, established_year FROM publishers ORDER BY id
+[2026-05-31 12:01:25,869] UPDATE publishers SET name = 'Harvard ki Kitabain', country = 'USA', established_year = 1913 WHERE id = 8
+[2026-05-31 12:01:25,911] SELECT id, name, country, established_year FROM publishers ORDER BY id
+[2026-05-31 12:01:34,373] SELECT COUNT(*) AS n FROM books
+[2026-05-31 12:01:34,373] SELECT COUNT(*) AS n FROM books WHERE status = 'Available'
+[2026-05-31 12:01:34,373] SELECT COUNT(*) AS n FROM books WHERE status = 'Issued'
+[2026-05-31 12:01:34,374] SELECT COUNT(*) AS n FROM students
+[2026-05-31 12:01:34,374] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL
+[2026-05-31 12:01:34,374] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL AND expiry_date < CURDATE()
+[2026-05-31 12:01:34,375] SELECT COALESCE(SUM(amount), 0) AS total FROM fines WHERE paid = FALSE
+[2026-05-31 12:01:36,215] SELECT b.id, b.title, b.author, b.isbn, b.status,
+               b.category_id, b.publisher_id,
+               COALESCE(c.name, 'Uncategorized') AS category,
+               COALESCE(p.name, 'Unknown Publisher') AS publisher
+        FROM books b
+        LEFT JOIN categories c ON b.category_id = c.id
+        LEFT JOIN publishers p ON b.publisher_id = p.id
+        WHERE 1=1
+     ORDER BY b.id
+[2026-05-31 12:01:36,234] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 12:01:36,253] SELECT id, name, country, established_year FROM publishers ORDER BY id
+[2026-05-31 12:01:56,865] SELECT COUNT(*) AS n FROM books
+[2026-05-31 12:01:56,865] SELECT COUNT(*) AS n FROM books WHERE status = 'Available'
+[2026-05-31 12:01:56,865] SELECT COUNT(*) AS n FROM books WHERE status = 'Issued'
+[2026-05-31 12:01:56,866] SELECT COUNT(*) AS n FROM students
+[2026-05-31 12:01:56,866] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL
+[2026-05-31 12:01:56,867] SELECT COUNT(*) AS n FROM issued_books WHERE return_date IS NULL AND expiry_date < CURDATE()
+[2026-05-31 12:01:56,867] SELECT COALESCE(SUM(amount), 0) AS total FROM fines WHERE paid = FALSE
+[2026-05-31 12:02:16,091] SELECT * FROM students WHERE username = 'fatima'
+[2026-05-31 12:02:16,306] SELECT COUNT(*) AS n FROM issued_books WHERE student_id = 5 AND return_date IS NULL
+[2026-05-31 12:02:16,310] SELECT COUNT(*) AS n FROM reservations WHERE student_id = 5 AND status = 'Pending'
+[2026-05-31 12:02:16,315] SELECT COALESCE(SUM(f.amount), 0) AS total
+            FROM fines f
+            JOIN issued_books ib ON f.issued_book_id = ib.id
+            WHERE ib.student_id = 5 AND f.paid = FALSE
+[2026-05-31 12:02:16,321] SELECT COUNT(*) AS n FROM issued_books WHERE student_id = 5
+[2026-05-31 12:02:16,383] SELECT ib.id, b.title, ib.issue_date, ib.expiry_date, ib.return_date
+            FROM issued_books ib
+            JOIN books b ON ib.book_id = b.id
+            WHERE ib.student_id = 5 AND ib.return_date IS NULL
+            ORDER BY ib.issue_date DESC
+[2026-05-31 12:02:24,946] SELECT ib.id, b.title, b.author, ib.issue_date, ib.expiry_date, ib.return_date,
+                   CASE
+                     WHEN ib.return_date IS NULL THEN 'Active'
+                     WHEN ib.return_date > ib.expiry_date THEN 'Late'
+                     ELSE 'On time'
+                   END AS loan_state
+            FROM issued_books ib
+            JOIN books b ON ib.book_id = b.id
+            WHERE ib.student_id = 5
+            ORDER BY ib.issue_date DESC
+[2026-05-31 12:02:32,306] SELECT COUNT(*) AS n FROM issued_books WHERE student_id = 5 AND return_date IS NULL
+[2026-05-31 12:02:32,306] SELECT COUNT(*) AS n FROM reservations WHERE student_id = 5 AND status = 'Pending'
+[2026-05-31 12:02:32,307] SELECT COALESCE(SUM(f.amount), 0) AS total
+            FROM fines f
+            JOIN issued_books ib ON f.issued_book_id = ib.id
+            WHERE ib.student_id = 5 AND f.paid = FALSE
+[2026-05-31 12:02:32,307] SELECT COUNT(*) AS n FROM issued_books WHERE student_id = 5
+[2026-05-31 12:02:32,326] SELECT ib.id, b.title, ib.issue_date, ib.expiry_date, ib.return_date
+            FROM issued_books ib
+            JOIN books b ON ib.book_id = b.id
+            WHERE ib.student_id = 5 AND ib.return_date IS NULL
+            ORDER BY ib.issue_date DESC
+[2026-05-31 12:02:34,606] SELECT r.id, b.title, b.author, r.reserved_at, r.status
+            FROM reservations r
+            JOIN books b ON r.book_id = b.id
+            WHERE r.student_id = 5
+            ORDER BY r.reserved_at DESC
+[2026-05-31 12:02:40,801] SELECT COUNT(*) AS n FROM issued_books WHERE student_id = 5 AND return_date IS NULL
+[2026-05-31 12:02:40,802] SELECT COUNT(*) AS n FROM reservations WHERE student_id = 5 AND status = 'Pending'
+[2026-05-31 12:02:40,809] SELECT COALESCE(SUM(f.amount), 0) AS total
+            FROM fines f
+            JOIN issued_books ib ON f.issued_book_id = ib.id
+            WHERE ib.student_id = 5 AND f.paid = FALSE
+[2026-05-31 12:02:40,810] SELECT COUNT(*) AS n FROM issued_books WHERE student_id = 5
+[2026-05-31 12:02:40,828] SELECT ib.id, b.title, ib.issue_date, ib.expiry_date, ib.return_date
+            FROM issued_books ib
+            JOIN books b ON ib.book_id = b.id
+            WHERE ib.student_id = 5 AND ib.return_date IS NULL
+            ORDER BY ib.issue_date DESC
+[2026-05-31 12:02:45,557] SELECT f.id, b.title, f.amount, f.paid, f.created_at, f.paid_at
+            FROM fines f
+            JOIN issued_books ib ON f.issued_book_id = ib.id
+            JOIN books b ON ib.book_id = b.id
+            WHERE ib.student_id = 5
+            ORDER BY f.created_at DESC
+[2026-05-31 12:02:45,580] SELECT COALESCE(SUM(f.amount), 0) AS total
+            FROM fines f
+            JOIN issued_books ib ON f.issued_book_id = ib.id
+            WHERE ib.student_id = 5 AND f.paid = FALSE
+[2026-05-31 12:02:50,050] SELECT COUNT(*) AS n FROM issued_books WHERE student_id = 5 AND return_date IS NULL
+[2026-05-31 12:02:50,050] SELECT COUNT(*) AS n FROM reservations WHERE student_id = 5 AND status = 'Pending'
+[2026-05-31 12:02:50,051] SELECT COALESCE(SUM(f.amount), 0) AS total
+            FROM fines f
+            JOIN issued_books ib ON f.issued_book_id = ib.id
+            WHERE ib.student_id = 5 AND f.paid = FALSE
+[2026-05-31 12:02:50,051] SELECT COUNT(*) AS n FROM issued_books WHERE student_id = 5
+[2026-05-31 12:02:50,069] SELECT ib.id, b.title, ib.issue_date, ib.expiry_date, ib.return_date
+            FROM issued_books ib
+            JOIN books b ON ib.book_id = b.id
+            WHERE ib.student_id = 5 AND ib.return_date IS NULL
+            ORDER BY ib.issue_date DESC
+[2026-05-31 12:02:53,800] SELECT b.id, b.title, b.author, b.isbn, b.status,
+               b.category_id, b.publisher_id,
+               COALESCE(c.name, 'Uncategorized') AS category,
+               COALESCE(p.name, 'Unknown Publisher') AS publisher
+        FROM books b
+        LEFT JOIN categories c ON b.category_id = c.id
+        LEFT JOIN publishers p ON b.publisher_id = p.id
+        WHERE 1=1
+     ORDER BY b.id
+[2026-05-31 12:02:53,822] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 12:02:53,841] SELECT book_id FROM reservations WHERE student_id = 5 AND status = 'Pending'
+[2026-05-31 12:03:00,904] SELECT id, status FROM books WHERE id = 15 FOR UPDATE
+[2026-05-31 12:03:00,929] SELECT ib.id, b.title, ib.issue_date, ib.expiry_date, ib.return_date
+            FROM issued_books ib
+            JOIN books b ON ib.book_id = b.id
+            WHERE ib.student_id = 5 AND ib.return_date IS NULL
+            ORDER BY ib.issue_date DESC
+[2026-05-31 12:03:09,478] SELECT id, status FROM books WHERE id = 11
+[2026-05-31 12:03:09,499] SELECT r.id, b.title, b.author, r.reserved_at, r.status
+            FROM reservations r
+            JOIN books b ON r.book_id = b.id
+            WHERE r.student_id = 5
+            ORDER BY r.reserved_at DESC
+[2026-05-31 12:06:16,511] SELECT * FROM students WHERE username = 'fatima'
+[2026-05-31 12:06:16,691] SELECT COUNT(*) AS n FROM issued_books WHERE student_id = 5 AND return_date IS NULL
+[2026-05-31 12:06:16,691] SELECT COUNT(*) AS n FROM reservations WHERE student_id = 5 AND status = 'Pending'
+[2026-05-31 12:06:16,692] SELECT COALESCE(SUM(f.amount), 0) AS total
+            FROM fines f
+            JOIN issued_books ib ON f.issued_book_id = ib.id
+            WHERE ib.student_id = 5 AND f.paid = FALSE
+[2026-05-31 12:06:16,694] SELECT COUNT(*) AS n FROM issued_books WHERE student_id = 5
+[2026-05-31 12:06:16,728] SELECT ib.id, b.title, ib.issue_date, ib.expiry_date, ib.return_date
+            FROM issued_books ib
+            JOIN books b ON ib.book_id = b.id
+            WHERE ib.student_id = 5 AND ib.return_date IS NULL
+            ORDER BY ib.issue_date DESC
+[2026-05-31 12:06:19,563] SELECT b.id, b.title, b.author, b.isbn, b.status,
+               b.category_id, b.publisher_id,
+               COALESCE(c.name, 'Uncategorized') AS category,
+               COALESCE(p.name, 'Unknown Publisher') AS publisher
+        FROM books b
+        LEFT JOIN categories c ON b.category_id = c.id
+        LEFT JOIN publishers p ON b.publisher_id = p.id
+        WHERE 1=1
+     ORDER BY b.id
+[2026-05-31 12:06:19,580] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 12:06:19,596] SELECT book_id FROM reservations WHERE student_id = 5 AND status = 'Pending'
+[2026-05-31 12:06:21,315] SELECT id, status FROM books WHERE id = 2 FOR UPDATE
+[2026-05-31 12:06:21,332] SELECT ib.id, b.title, ib.issue_date, ib.expiry_date, ib.return_date
+            FROM issued_books ib
+            JOIN books b ON ib.book_id = b.id
+            WHERE ib.student_id = 5 AND ib.return_date IS NULL
+            ORDER BY ib.issue_date DESC
+[2026-05-31 12:12:47,680] SELECT * FROM students WHERE username = 'fatima'
+[2026-05-31 12:12:47,852] SELECT COUNT(*) AS n FROM issued_books WHERE student_id = 5 AND return_date IS NULL
+[2026-05-31 12:12:47,853] SELECT COUNT(*) AS n FROM reservations WHERE student_id = 5 AND status = 'Pending'
+[2026-05-31 12:12:47,854] SELECT COALESCE(SUM(f.amount), 0) AS total
+            FROM fines f
+            JOIN issued_books ib ON f.issued_book_id = ib.id
+            WHERE ib.student_id = 5 AND f.paid = FALSE
+[2026-05-31 12:12:47,857] SELECT COUNT(*) AS n FROM issued_books WHERE student_id = 5
+[2026-05-31 12:12:47,896] SELECT ib.id, ib.book_id, b.title, ib.issue_date, ib.expiry_date, ib.return_date
+            FROM issued_books ib
+            JOIN books b ON ib.book_id = b.id
+            WHERE ib.student_id = 5 AND ib.return_date IS NULL
+            ORDER BY ib.issue_date DESC
+[2026-05-31 12:12:53,560] SELECT b.id, b.title, b.author, b.isbn, b.status,
+               b.category_id, b.publisher_id,
+               COALESCE(c.name, 'Uncategorized') AS category,
+               COALESCE(p.name, 'Unknown Publisher') AS publisher
+        FROM books b
+        LEFT JOIN categories c ON b.category_id = c.id
+        LEFT JOIN publishers p ON b.publisher_id = p.id
+        WHERE 1=1
+     ORDER BY b.id
+[2026-05-31 12:12:53,587] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 12:12:53,607] SELECT book_id FROM reservations WHERE student_id = 5 AND status = 'Pending'
+[2026-05-31 12:12:57,713] SELECT id, status FROM books WHERE id = 12 FOR UPDATE
+[2026-05-31 12:12:57,732] SELECT ib.id, ib.book_id, b.title, ib.issue_date, ib.expiry_date, ib.return_date
+            FROM issued_books ib
+            JOIN books b ON ib.book_id = b.id
+            WHERE ib.student_id = 5 AND ib.return_date IS NULL
+            ORDER BY ib.issue_date DESC
+[2026-05-31 12:12:57,750] INSERT INTO issued_books (book_id, student_id, issue_date, expiry_date) VALUES (12, 5, '2026-05-31', '2026-06-14')
+[2026-05-31 12:12:57,770] UPDATE books SET status = 'Issued' WHERE id = 12
+[2026-05-31 12:12:57,798] SELECT COUNT(*) AS n FROM issued_books WHERE student_id = 5 AND return_date IS NULL
+[2026-05-31 12:12:57,799] SELECT COUNT(*) AS n FROM reservations WHERE student_id = 5 AND status = 'Pending'
+[2026-05-31 12:12:57,800] SELECT COALESCE(SUM(f.amount), 0) AS total
+            FROM fines f
+            JOIN issued_books ib ON f.issued_book_id = ib.id
+            WHERE ib.student_id = 5 AND f.paid = FALSE
+[2026-05-31 12:12:57,800] SELECT COUNT(*) AS n FROM issued_books WHERE student_id = 5
+[2026-05-31 12:12:57,817] SELECT ib.id, ib.book_id, b.title, ib.issue_date, ib.expiry_date, ib.return_date
+            FROM issued_books ib
+            JOIN books b ON ib.book_id = b.id
+            WHERE ib.student_id = 5 AND ib.return_date IS NULL
+            ORDER BY ib.issue_date DESC
+[2026-05-31 12:13:03,022] SELECT b.id, b.title, b.author, b.isbn, b.status,
+               b.category_id, b.publisher_id,
+               COALESCE(c.name, 'Uncategorized') AS category,
+               COALESCE(p.name, 'Unknown Publisher') AS publisher
+        FROM books b
+        LEFT JOIN categories c ON b.category_id = c.id
+        LEFT JOIN publishers p ON b.publisher_id = p.id
+        WHERE 1=1
+     ORDER BY b.id
+[2026-05-31 12:13:03,041] SELECT id, name, description FROM categories ORDER BY id
+[2026-05-31 12:13:03,058] SELECT book_id FROM reservations WHERE student_id = 5 AND status = 'Pending'
+[2026-05-31 12:13:04,414] SELECT id, status FROM books WHERE id = 1
+[2026-05-31 12:13:04,436] SELECT r.id, b.title, b.author, r.reserved_at, r.status
+            FROM reservations r
+            JOIN books b ON r.book_id = b.id
+            WHERE r.student_id = 5
+            ORDER BY r.reserved_at DESC

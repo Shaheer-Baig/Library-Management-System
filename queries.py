@@ -381,7 +381,7 @@ def get_active_loans_for_student(student_id):
     with db_cursor() as cur:
         cur.execute(
             """
-            SELECT ib.id, b.title, ib.issue_date, ib.expiry_date, ib.return_date
+            SELECT ib.id, ib.book_id, b.title, ib.issue_date, ib.expiry_date, ib.return_date
             FROM issued_books ib
             JOIN books b ON ib.book_id = b.id
             WHERE ib.student_id = %s AND ib.return_date IS NULL
@@ -475,7 +475,7 @@ def get_student_reservations(student_id):
     with db_cursor() as cur:
         cur.execute(
             """
-            SELECT r.id, b.title, b.author, r.reserved_at, r.status
+            SELECT r.id, r.book_id, b.title, b.author, r.reserved_at, r.status
             FROM reservations r
             JOIN books b ON r.book_id = b.id
             WHERE r.student_id = %s
