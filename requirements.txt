@@ -1,2 +1,4 @@
-flask==2.3.3
-flask-wtf==1.2.1
+Flask
+Flask-WTF
+Werkzeug
+mysql-connector-python

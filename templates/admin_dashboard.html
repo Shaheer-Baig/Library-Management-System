@@ -1,22 +1,53 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="fixed inset-0 bg-cover bg-center bg-no-repeat"
-     style="background-image: url('{{ url_for('static', filename='images/pic4.jpg') }}'); z-index: -1;">
+     style="background-image: url('{{ url_for('static', filename='images/background.jpg') }}'); z-index: -1;">
 </div>
-<br><br><br>
-<h2 class="text-3xl font-semibold text-white text-center tracking-tight">Admin Dashboard</h2> <br><br><br>
-<div class="space-y-4">
-    <a href="{{ url_for('create_admin') }}" class="block-center bg-black-300 font-semibold text-white text-xl px-12 py-6 rounded">Create Admin</a> <br><br>
-    <a href="{{ url_for('add_book') }}" class="block-center bg-black-300 font-semibold text-white text-xl px-12 py-6 rounded">Add Book</a> <br><br>
-    <a href="{{ url_for('view_books') }}" class="block-center bg-black-300 font-semibold text-white text-xl px-12 py-6 rounded">View Books</a> <br><br>
-    <a href="{{ url_for('issue_book') }}" class="block-center bg-black-300 font-semibold text-white text-xl px-12 py-6 rounded">Issue Book</a> <br><br>
-    <a href="{{ url_for('view_issued_books') }}" class="block-center bg-black-300 font-semibold text-white text-xl px-12 py-6 rounded">View Issued Books</a> <br><br>
-    <a href="{{ url_for('view_students') }}" class="block-center bg-black-300 font-semibold text-white text-xl px-12 py-6 rounded">View Students</a><br><br>
-    <a href="{{ url_for('search_books') }}" class="block-center bg-black-300 font-semibold text-white text-xl px-12 py-6 rounded">Search Books</a><br><br>
-    <a href="{{ url_for('logout') }}" class="block-center bg-black-300 font-semibold text-white text-xl px-12 py-6 rounded">Logout</a> <br><br>
+<div class="min-h-screen p-6">
+    <div class="max-w-6xl mx-auto bg-white bg-opacity-70 backdrop-blur-sm rounded-2xl shadow-xl p-6 mb-8">
+        <h2 class="text-4xl font-semibold text-black text-center tracking-tight mt-4 mb-4">ADMIN DASHBOARD</h2>
+        <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white bg-opacity-60 backdrop-blur-sm rounded-lg shadow p-4 text-center">
+                <div class="text-sm uppercase tracking-wider text-gray-600">Total Books</div>
+                <div class="text-3xl font-bold text-black-900">{{ stats.total_books }}</div>
+            </div>
+            <div class="bg-white bg-opacity-60 backdrop-blur-sm rounded-lg shadow p-4 text-center">
+                <div class="text-sm uppercase tracking-wider text-gray-600">Available</div>
+                <div class="text-3xl font-bold text-black-900">{{ stats.available_books }}</div>
+            </div>
+            <div class="bg-white bg-opacity-60 backdrop-blur-sm rounded-lg shadow p-4 text-center">
+                <div class="text-sm uppercase tracking-wider text-gray-600">Issued</div>
+                <div class="text-3xl font-bold text-black-900">{{ stats.issued_books_count }}</div>
+            </div>
+            <div class="bg-white bg-opacity-60 backdrop-blur-sm rounded-lg shadow p-4 text-center">
+                <div class="text-sm uppercase tracking-wider text-gray-600">Total Students</div>
+                <div class="text-3xl font-bold text-black-900">{{ stats.total_students }}</div>
+            </div>
+            <div class="bg-white bg-opacity-60 backdrop-blur-sm rounded-lg shadow p-4 text-center">
+                <div class="text-sm uppercase tracking-wider text-gray-600">Active Loans</div>
+                <div class="text-3xl font-bold text-black-900">{{ stats.active_loans }}</div>
+            </div>
+            <div class="bg-white bg-opacity-60 backdrop-blur-sm rounded-lg shadow p-4 text-center">
+                <div class="text-sm uppercase tracking-wider text-gray-600">Overdue Loans</div>
+                <div class="text-3xl font-bold text-black-900">{{ stats.overdue_loans }}</div>
+            </div>
+            <div class="bg-white bg-opacity-60 backdrop-blur-sm rounded-lg shadow p-4 text-center col-span-2">
+                <div class="text-sm uppercase tracking-wider text-gray-600">Unpaid Fines (Total)</div>
+                <div class="text-3xl font-bold text-amber-700">{{ stats.unpaid_fines_total }}</div>
+            </div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4">
+            <a href="{{ url_for('manage_categories') }}" class="bg-[#5FABDE] text-xl text-black text-center font-semibold px-4 py-4 rounded-lg shadow hover:opacity-90 transition">Manage Categories</a>
+            <a href="{{ url_for('manage_publishers') }}" class="bg-[#5FABDE] text-xl text-black text-center font-semibold px-4 py-4 rounded-lg shadow hover:opacity-90 transition">Manage Publishers</a>
+            <a href="{{ url_for('manage_admins') }}" class="bg-[#5FABDE] text-xl text-black text-center font-semibold px-4 py-4 rounded-lg shadow hover:opacity-90 transition">Manage Admins</a>
+            <a href="{{ url_for('manage_students') }}" class="bg-[#5FABDE] text-xl text-black text-center font-semibold px-4 py-4 rounded-lg shadow hover:opacity-90 transition">Manage Students</a>
+            <a href="{{ url_for('manage_books') }}" class="bg-[#5FABDE] text-xl text-black text-center font-semibold px-4 py-4 rounded-lg shadow hover:opacity-90 transition">Manage Books</a>
+            <a href="{{ url_for('manage_loans') }}" class="bg-[#5FABDE] text-xl text-black text-center font-semibold px-4 py-4 rounded-lg shadow hover:opacity-90 transition">Manage Loans</a>
+        </div>
+        <div class="flex gap-3">
+            <a href="{{ url_for('reports') }}" class="flex-1 bg-[#7C3AED] text-2xl text-white text-center font-semibold px-4 py-4 rounded-lg shadow hover:opacity-90 transition">REPORTS</a>
+            <a href="{{ url_for('logout') }}" class="flex-1 bg-[#7C3AED] text-2xl text-white text-center font-semibold px-4 py-4 rounded-lg shadow hover:opacity-90 transition">LOGOUT</a>
+        </div>
+    </div>
 </div>
-<br><br>
- <footer class="text-center text-white-sm mt-12 mb-6">
-        <p class="drop-shadow-md">Powered by <span class="font-white font-semibold">Code_of_Duty</span></p>
-    </footer>
 {% endblock %}

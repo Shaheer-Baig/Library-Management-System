@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="fixed inset-0 bg-cover bg-center bg-no-repeat"
+     style="background-image: url('{{ url_for('static', filename='images/background.jpg') }}'); z-index: -1;">
+    <div class="absolute inset-0 bg-black/30 backdrop-blur-[2px]"></div>
+</div>
+<div class="min-h-screen p-4 relative">
+    <div class="max-w-6xl mx-auto glass-card rounded-2xl shadow-2xl overflow-hidden">
+        <div class="bg-[#C4A484] px-6 py-5 flex items-center justify-between">
+            <h2 class="text-3xl font-semibold text-white tracking-tight">Browse Catalogue</h2>
+            <a href="{{ url_for('student_dashboard') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm font-semibold transition">Back to Dashboard</a>
+        </div>
+        <div class="p-6 border-b border-gray-200/50 bg-white/30 backdrop-blur-sm">
+            <form method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
+                <div>
+                    <select name="cat_id" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                        <option value="">All categories</option>
+                        {% for c in categories %}
+                        <option value="{{ c['id'] }}" {% if selected_cat == c['id'] %}selected{% endif %}>{{ c['name'] | e }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="md:col-span-2">
+                    <input type="text" name="q" value="{{ q | e }}" maxlength="100" placeholder="Enter keywords..." class="w-full px-3 py-2 border border-gray-300 rounded-md">
+                </div>
+                <div class="flex gap-2">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition">Apply</button>
+                    <a href="{{ url_for('student_catalogue') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded transition">Reset</a>
+                </div>
+            </form>
+        </div>
+        <div class="overflow-x-auto p-4">
+            <table class="w-full border-collapse border border-gray-300 bg-white">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="border border-gray-300 px-3 py-2 text-left">Title</th>
+                        <th class="border border-gray-300 px-3 py-2 text-left">Author</th>
+                        <th class="border border-gray-300 px-3 py-2 text-left">Category</th>
+                        <th class="border border-gray-300 px-3 py-2 text-left">Publisher</th>
+                        <th class="border border-gray-300 px-3 py-2 text-left">ISBN</th>
+                        <th class="border border-gray-300 px-3 py-2 text-center">Status</th>
+                        <th class="border border-gray-300 px-3 py-2 text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for b in books %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="border border-gray-300 px-3 py-2">{{ b['title'] | e }}</td>
+                        <td class="border border-gray-300 px-3 py-2">{{ b['author'] | e }}</td>
+                        <td class="border border-gray-300 px-3 py-2">{{ b['category'] | e if b['category'] else '—' }}</td>
+                        <td class="border border-gray-300 px-3 py-2">{{ b['publisher'] | e if b['publisher'] else '—' }}</td>
+                        <td class="border border-gray-300 px-3 py-2">{{ b['isbn'] | e }}</td>
+                        <td class="border border-gray-300 px-3 py-2 text-center">
+                            {% if b['status'] == 'Available' %}
+                                <span class="inline-block px-2 py-1 rounded bg-green-100 text-green-800 text-xs font-semibold">Available</span>
+                            {% elif b['status'] == 'Issued' %}
+                                <span class="inline-block px-2 py-1 rounded bg-blue-100 text-blue-800 text-xs font-semibold">Issued</span>
+                            {% else %}
+                                <span class="inline-block px-2 py-1 rounded bg-gray-200 text-gray-700 text-xs font-semibold">{{ b['status'] }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="border border-gray-300 px-3 py-2 text-center whitespace-nowrap">
+                            {% if b['action_state'] == 'issue' %}
+                            <form method="POST" action="{{ url_for('student_issue_book', book_id=b['id']) }}">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm transition">Issue Book</button>
+                            </form>
+                            {% elif b['action_state'] == 'reserve' %}
+                            <form method="POST" action="{{ url_for('reserve_book', book_id=b['id']) }}">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm transition">Reserve</button>
+                            </form>
+                            {% elif b['action_state'] == 'reserved_by_me' %}
+                                <button disabled class="bg-gray-400 text-white px-3 py-1 rounded text-sm cursor-not-allowed">Reservation Pending</button>
+                            {% else %}
+                                <button disabled class="bg-gray-400 text-white px-3 py-1 rounded text-sm cursor-not-allowed">Unavailable</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="border border-gray-300 px-3 py-6 text-center text-gray-600">No books match your filters.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <footer class="text-center text-xs text-gray-500 pb-4">
+            Powered by <span class="font-semibold">Code_of_Duty</span>
+        </footer>
+    </div>
+</div>
+{% endblock %}

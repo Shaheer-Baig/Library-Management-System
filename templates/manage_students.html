@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="fixed inset-0 bg-cover bg-center bg-no-repeat"
+     style="background-image: url('{{ url_for('static', filename='images/background.jpg') }}'); z-index: -1;">
+</div>
+<div class="min-h-screen flex items-center justify-center p-4">
+ <div class="w-full max-w-6xl bg-white bg-opacity-50 backdrop-blur-sm rounded-xl shadow-xl overflow-hidden">
+     <div class="bg-[#C4A484] px-6 py-5">
+        <h2 class="text-3xl font-semibold text-white text-center tracking-tight">Manage Students</h2>
+     </div>
+     <form method="POST" class="p-6 grid grid-cols-1 md:grid-cols-5 gap-3 items-end border-b border-gray-300 bg-white bg-opacity-60">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="action" value="add">
+        <div>
+            <label class="block text-lg font-semibold text-center">Username</label>
+            <input type="text" name="username" required maxlength="20" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+        </div>
+        <div>
+            <label class="block text-lg font-semibold text-center">Password</label>
+            <input type="password" name="password" required class="w-full px-3 py-2 border border-gray-300 rounded-md">
+        </div>
+        <div>
+            <label class="block text-lg font-semibold text-center">Email</label>
+            <input type="email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+        </div>
+        <div>
+            <label class="block text-lg font-semibold text-center">Phone</label>
+            <input type="text" name="phone" class="w-full px-3 py-2 border border-gray-300 rounded-md">
+        </div>
+        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Add Student</button>
+     </form>
+     <div class="overflow-x-auto p-4">
+     <table class="w-full border-collapse border border-gray-300 bg-white">
+        <thead>
+            <tr class="bg-gray-200">
+                <th class="border border-gray-300 px-3 py-2">ID</th>
+                <th class="border border-gray-300 px-3 py-2">Username</th>
+                <th class="border border-gray-300 px-3 py-2">Email</th>
+                <th class="border border-gray-300 px-3 py-2">Phone</th>
+                <th class="border border-gray-300 px-3 py-2">Created At</th>
+                <th class="border border-gray-300 px-3 py-2">Reset Password</th>
+                <th class="border border-gray-300 px-3 py-2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in students %}
+            <tr id="row-{{ s['id'] }}">
+                <td class="border border-gray-300 px-3 py-2 text-center">{{ s['id'] }}</td>
+                <td class="border border-gray-300 px-3 py-2">
+                    <input type="text" id="username-{{ s['id'] }}" value="{{ s['username'] | e }}" class="w-full px-2 py-1 border border-gray-300 rounded">
+                </td>
+                <td class="border border-gray-300 px-3 py-2">
+                    <input type="email" id="email-{{ s['id'] }}" value="{{ s['email'] | e if s['email'] else '' }}" class="w-full px-2 py-1 border border-gray-300 rounded">
+                </td>
+                <td class="border border-gray-300 px-3 py-2">
+                    <input type="text" id="phone-{{ s['id'] }}" value="{{ s['phone'] | e if s['phone'] else '' }}" class="w-full px-2 py-1 border border-gray-300 rounded">
+                </td>
+                <td class="border border-gray-300 px-3 py-2">{{ s['created_at'] }}</td>
+                <td class="border border-gray-300 px-3 py-2">
+                    <form method="POST" class="flex gap-2 items-center">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="action" value="reset_password">
+                        <input type="hidden" name="id" value="{{ s['id'] }}">
+                        <input type="password" name="new_password" required placeholder="New password" class="px-2 py-1 border border-gray-300 rounded text-sm w-28">
+                        <button type="submit" class="bg-amber-600 text-white px-3 py-1 rounded text-sm hover:bg-amber-700 transition">Reset</button>
+                    </form>
+                </td>
+                <td class="border border-gray-300 px-3 py-2 whitespace-nowrap text-center">
+                    <form method="POST" class="inline-block" id="save-form-{{ s['id'] }}" onsubmit="prepareStudentSave({{ s['id'] }})">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="action" value="update">
+                        <input type="hidden" name="id" value="{{ s['id'] }}">
+                        <input type="hidden" name="username" id="save-username-{{ s['id'] }}">
+                        <input type="hidden" name="email" id="save-email-{{ s['id'] }}">
+                        <input type="hidden" name="phone" id="save-phone-{{ s['id'] }}">
+                        <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition">Save</button>
+                    </form>
+                    <form method="POST" class="inline-block ml-2" onsubmit="return confirm('Delete this student? This will also delete their loans, fines, and reservations.');">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="action" value="delete">
+                        <input type="hidden" name="id" value="{{ s['id'] }}">
+                        <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+     </table>
+     </div>
+     <a href="{{ url_for('admin_dashboard') }}" class="block bg-gray-500 text-white px-4 py-2 rounded mt-4 mx-4 mb-4 text-center hover:bg-gray-600 transition">Back to Dashboard</a>
+     <footer class="text-center text-sm mb-6">
+        <p class="drop-shadow-md">Powered by <span class="font-semibold">Code_of_Duty</span></p>
+     </footer>
+ </div>
+</div>
+<div class="mb-10"></div>
+
+<script>
+    function prepareStudentSave(studentId) {
+        let username = document.getElementById('username-' + studentId).value;
+        let email = document.getElementById('email-' + studentId).value;
+        let phone = document.getElementById('phone-' + studentId).value;
+        document.getElementById('save-username-' + studentId).value = username;
+        document.getElementById('save-email-' + studentId).value = email;
+        document.getElementById('save-phone-' + studentId).value = phone;
+        return true;
+    }
+</script>
+{% endblock %}
